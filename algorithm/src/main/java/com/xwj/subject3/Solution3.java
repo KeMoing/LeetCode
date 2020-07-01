@@ -1,41 +1,36 @@
 package com.xwj.subject3;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
- * 使用队列实现
+ * 滑动窗口
  *
  * @author xuwenjie
- * @create 2020-07-01 0:52
+ * @create 2020-07-02 1:13
  */
-public class Solution2 {
+public class Solution3 {
+
     public int lengthOfLongestSubstring(String s) {
         // 参数检查
         if (s == null || s.length() == 0) {
             return 0;
         }
 
-        Queue<Character> queue = new LinkedList<>();
-        HashSet<Character> set = new HashSet<>();
         int maxLen = 0;
-
-        for (int i = 0; i < s.length(); i++) {
-            char curr = s.charAt(i);
-            while (set.contains(curr)) {
-                set.remove(queue.poll());
+        Integer[] cacheArr = new Integer[128];
+        int start = 0;
+        for (int end = 0; end < s.length(); end++) {
+            char curr = s.charAt(end);
+            if (cacheArr[curr] != null) {
+                start = Math.max(start, cacheArr[curr] + 1);
             }
-            queue.offer(curr);
-            set.add(curr);
-            maxLen = Math.max(maxLen, queue.size());
+            cacheArr[curr] = end;
+            maxLen = Math.max(maxLen, end - start + 1);
         }
 
         return maxLen;
     }
 
     public static void main(String[] args) {
-        Solution2 solution = new Solution2();
+        Solution3 solution = new Solution3();
         String s1 = "abcabcbb";
         System.out.println(solution.lengthOfLongestSubstring(s1));
         String s2 = "bbbbb";
