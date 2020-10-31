@@ -8,10 +8,14 @@ package com.xwj.subject2;
 public class Solution {
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        // 虚节点
         ListNode dummyHead = new ListNode(0);
+
+        // 当前节点
         ListNode currNode = dummyHead;
         ListNode pointer1 = l1;
         ListNode pointer2 = l2;
+        // 进位
         int count = 0;
         while (pointer1 != null || pointer2 != null) {
             int num1 = pointer1 !=null ? pointer1.val : 0;
